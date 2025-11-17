@@ -19,4 +19,8 @@ public class Module {
     }
 
     public String getCode() { return code; }
+    public int getLectureHours() { return lectureHours; }
+    public int getLabHours() { return labHours; }
+    public int getTutorialHours() { return tutorialHours; }
+    public List<Lecturer> getLecturers() { return lecturers; }
 }

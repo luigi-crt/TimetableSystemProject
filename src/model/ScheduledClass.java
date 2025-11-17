@@ -16,4 +16,10 @@ public class ScheduledClass {
         this.time = time;
         this.group = group;
     }
+    public String getDay(){return day;}
+    public String getTime(){return time;}
+    public Module getModule(){return module;}
+    public Room getRoom(){return room;}
+    public StudentGroup getGroup(){return group;}
+
 }
