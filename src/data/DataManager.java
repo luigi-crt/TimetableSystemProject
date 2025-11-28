@@ -28,9 +28,11 @@ public class DataManager {
         loadScheduledClasses();
     }
 
+    private static final String DATA_PATH = "src/resources/";
+
     // ---------------- Load Programmes ----------------
     private void loadProgrammes() {
-        try (CSVReader reader = new CSVReader("programmes.csv")) {
+        try (CSVReader reader = new CSVReader(DATA_PATH + "programmes.csv")) {
             ArrayList<String[]> rows = reader.readToMatrix();
             programmes.clear();
             for (String[] cols : rows.subList(1, rows.size())) {
@@ -43,7 +45,7 @@ public class DataManager {
 
     // ---------------- Load Lecturers ----------------
     private void loadLecturers() {
-        try (CSVReader reader = new CSVReader("lecturers.csv")) {
+        try (CSVReader reader = new CSVReader(DATA_PATH + "lecturers.csv")) {
             ArrayList<String[]> rows = reader.readToMatrix();
             lecturers.clear();
             for (String[] cols : rows.subList(1, rows.size())) {
@@ -58,7 +60,7 @@ public class DataManager {
 
     // ---------------- Load Rooms ----------------
     private void loadRooms() {
-        try (CSVReader reader = new CSVReader("rooms.csv")) {
+        try (CSVReader reader = new CSVReader(DATA_PATH + "rooms.csv")) {
             ArrayList<String[]> rows = reader.readToMatrix();
             rooms.clear();
             for (String[] cols : rows.subList(1, rows.size())) {
@@ -74,7 +76,7 @@ public class DataManager {
 
     // ---------------- Load Modules ----------------
     private void loadModules() {
-        try (CSVReader reader = new CSVReader("modules.csv")) {
+        try (CSVReader reader = new CSVReader(DATA_PATH + "modules.csv")) {
             ArrayList<String[]> rows = reader.readToMatrix();
             modules.clear();
             for (String[] cols : rows.subList(1, rows.size())) {
@@ -102,7 +104,7 @@ public class DataManager {
 
     // ---------------- Load Student Groups ----------------
     private void loadGroups() {
-        try (CSVReader reader = new CSVReader("student_groups.csv")) {
+        try (CSVReader reader = new CSVReader(DATA_PATH + "student_groups.csv")) {
             ArrayList<String[]> rows = reader.readToMatrix();
             groups.clear();
             for (String[] cols : rows.subList(1, rows.size())) {
@@ -119,7 +121,7 @@ public class DataManager {
 
     // ---------------- Load Timetable ----------------
     private void loadScheduledClasses() {
-        try (CSVReader reader = new CSVReader("timetable.csv")) {
+        try (CSVReader reader = new CSVReader(DATA_PATH + "timetable.csv")) {
             ArrayList<String[]> rows = reader.readToMatrix();
             scheduledClasses.clear();
             for (String[] cols : rows.subList(1, rows.size())) {
@@ -137,7 +139,7 @@ public class DataManager {
 
     // ---------------- Save Timetable ----------------
     public void saveScheduledClasses() {
-        try (CSVWriter writer = new CSVWriter("timetable.csv")) {
+        try (CSVWriter writer = new CSVWriter(DATA_PATH + "timetable.csv")) {
             writer.writeRecord("Module,Room,Day,Time,Group");
             List<String[]> rows = new ArrayList<>();
             for (ScheduledClass sc : scheduledClasses) {
