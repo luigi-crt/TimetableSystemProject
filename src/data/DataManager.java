@@ -1,4 +1,3 @@
-
 package data;
 
 import model.*;
@@ -50,7 +49,7 @@ public class DataManager {
             for (String[] cols : rows.subList(1, rows.size())) {
                 String id = cols[0].trim();
                 String name = cols[1].trim();
-                lecturers.add(new Lecturer(id, name));
+                lecturers.add(new Lecturer(id, name, null));
             }
         } catch (Exception e) {
             System.err.println("Error loading lecturers: " + e.getMessage());
@@ -188,3 +187,4 @@ public class DataManager {
         this.scheduledClasses = classes;
     }
 }
+
