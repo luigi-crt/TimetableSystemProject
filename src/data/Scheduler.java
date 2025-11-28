@@ -2,6 +2,7 @@ package data;
 
 import model.*;
 import java.util.*;
+import model.Module;
 
 public class Scheduler {
 
