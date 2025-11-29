@@ -1,8 +1,12 @@
 package view;
 
+import data.DataManager;
+import view.CLI;
+
 public class Main {
     public static void main(String[] args) {
-        CLI app = new CLI();
-        app.start();
+        DataManager dataManager = new DataManager();
+        CLI cli = new CLI(dataManager);
+        cli.start();
     }
 }

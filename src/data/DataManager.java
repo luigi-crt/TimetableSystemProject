@@ -1,5 +1,7 @@
 package data;
 
+import controller.ClashDetector;
+import controller.TimetableGenerator;
 import model.*;
 import java.util.*;
 import java.io.*;
@@ -156,6 +158,19 @@ public class DataManager {
             System.err.println("Error saving timetable: " + e.getMessage());
         }
     }
+
+    public void generateAndSaveTimetable() {
+        TimetableGenerator generator = new TimetableGenerator(this);
+        List<ScheduledClass> generated = generator.generateTimetable();
+        setScheduledClasses(generated);
+        saveScheduledClasses();
+    }
+
+    public List<ClashDetector.Clash> detectClashes() {
+        ClashDetector detector = new ClashDetector();
+        return detector.detectClashes(getScheduledClasses());
+    }
+
 
     // ---------------- Lookup Helpers ----------------
     public Programme getProgramme(String code) {
