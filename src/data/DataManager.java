@@ -25,6 +25,12 @@ public class DataManager {
     private List<ProgrammeStructure> programmeStructures = new ArrayList<>();
 
     // ---------------- Load All ----------------
+
+    /**
+     * Loads all data from CSV files into memory.
+     * This includes programmes, lecturers, rooms, modules, student groups,
+     * students, programme structures, and scheduled classes
+     */
     public void loadAll() {
         loadProgrammes();
         loadLecturers();
@@ -177,7 +183,12 @@ public class DataManager {
         }
     }
 
-    // ---------------- Save Timetable ----------------
+    // ---------------- Save Timetable ---------------
+
+    /**
+     * Saves the current list of scheduled classes (timetable) to timetable.csv
+     * The file includes columns for module, room, dau, time, group, session type and lecturer ID
+     */
     public void saveScheduledClasses() {
         try (CSVWriter writer = new CSVWriter(DATA_PATH + "timetable.csv")) {
             writer.writeRecord("Module,Room,Day,Time,Group,SessionType,LecturerID");
@@ -200,6 +211,14 @@ public class DataManager {
     }
 
     // ---------------- Programme Structure Lookup ----------------
+
+    /**
+     * Gets all modules for a given programm, year and semester.
+     * @param programmeCode the programme code
+     * @param year the academic year
+     * @param semester the semester number
+     * @return a list of Modules matching the semester & year specified
+     */
     public List<Module> getModulesForProgrammeYearSemester(String programmeCode, int year, int semester) {
         List<Module> result = new ArrayList<>();
         for (ProgrammeStructure ps : programmeStructures) {
@@ -214,6 +233,12 @@ public class DataManager {
     }
 
     // ---------------- Timetable Generation ----------------
+
+    /**
+     * Generates a timetable for the specified semester and saves it to csv.
+     * Uses TimetableGenerator to create the timetable.
+     * @param semester the semester number
+     */
     public void generateAndSaveTimetable(int semester) {
         TimetableGenerator generator = new TimetableGenerator(this, semester);
         List<ScheduledClass> generated = generator.generateTimetable();
@@ -222,6 +247,12 @@ public class DataManager {
     }
 
     // ---------------- Student & Lecturer Timetable Lookup ----------------
+
+    /**
+     * Getter for a student by their ID
+     * @param studentId the students' identifier
+     * @return the student object or null if it's not found
+     */
     public Student getStudent(String studentId) {
         for (Student s : students) {
             if (s.getId().equals(studentId)) return s;
@@ -229,6 +260,11 @@ public class DataManager {
         return null;
     }
 
+    /**
+     * Getter for a lecturer by their ID
+     * @param lecturerId the lecturer's identifier
+     * @return the lecturer object or null if it's not found
+     */
     public Lecturer getLecturer(String lecturerId) {
         for (Lecturer l : lecturers) {
             if (l.getId().equals(lecturerId)) return l;
@@ -236,6 +272,12 @@ public class DataManager {
         return null;
     }
 
+    /**
+     * Gets a timettable for a specific student using their ID
+     * @param studentId the student's identifier
+     * @return a list of ScheduledClass Objects for the student's
+     * group that the student belongs to
+     */
     public List<ScheduledClass> getTimetableForStudent(String studentId) {
         Student student = getStudent(studentId);
         if (student == null) return Collections.emptyList();
@@ -249,6 +291,11 @@ public class DataManager {
         return result;
     }
 
+    /**
+     * Gets a timetable for a specific lecturer using their ID
+     * @param lecturerId the lecturer's identifier
+     * @return list of ScheduledClass objects taught by the lecturer
+     */
     public List<ScheduledClass> getTimetableForLecturer(String lecturerId) {
         List<ScheduledClass> result = new ArrayList<>();
         for (ScheduledClass sc : scheduledClasses) {
@@ -260,6 +307,12 @@ public class DataManager {
     }
 
     // ---------------- Getters & Setters ----------------
+
+    /**
+     * Gets the programme by its code
+     * @param code the programme code
+     * @return Programme object
+     */
     public Programme getProgramme(String code) {
         for (Programme p : programmes) {
             if (p.getCode().equals(code)) return p;
@@ -267,6 +320,11 @@ public class DataManager {
         return null;
     }
 
+    /**
+     * Gets the room by its ID
+     * @param id room identifier
+     * @return the room object
+     */
     public Room getRoom(String id) {
         for (Room r : rooms) {
             if (r.getRoomId().equals(id)) return r;
@@ -274,6 +332,11 @@ public class DataManager {
         return null;
     }
 
+    /**
+     * Gets the module by its code
+     * @param code the module's code
+     * @return the module object
+     */
     public Module getModule(String code) {
         for (Module m : modules) {
             if (m.getCode().equals(code)) return m;
@@ -281,6 +344,11 @@ public class DataManager {
         return null;
     }
 
+    /**
+     * Gets a student group by its ID
+     * @param id the group's identifier
+     * @return the student group object
+     */
     public StudentGroup getGroup(String id) {
         for (StudentGroup g : groups) {
             if (g.getGroupId().equals(id)) return g;
@@ -288,11 +356,31 @@ public class DataManager {
         return null;
     }
 
+    /**
+     * @return list of all modules
+     */
     public List<Module> getModules() { return modules; }
+    /**
+     * @return list of all rooms
+     */
     public List<Room> getRooms() { return rooms; }
+    /**
+     * @return list of all Student groups
+     */
     public List<StudentGroup> getGroups() { return groups; }
+    /**
+     * @return list of all Lecturers
+     */
     public List<Lecturer> getLecturers() { return lecturers; }
+    /**
+     * @return list of all ScheduledClasses
+     */
     public List<ScheduledClass> getScheduledClasses() { return scheduledClasses; }
+
+    /**
+     * Sets the list of scheduled classes
+     * @param classes the list of ScheduledClass objects to set
+     */
     public void setScheduledClasses(List<ScheduledClass> classes) { this.scheduledClasses = classes; }
 }
 

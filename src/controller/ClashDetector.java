@@ -2,6 +2,15 @@ package controller;
 import model.*;
 import java.util.*;
 
+/**
+ * Class that detects clashes scheduling conflicts in the timetable
+ *
+ * Checks for room double bookings, lecturer clashes, group clashes, room capacity
+ * and room type mismsatches.
+ *
+ * It is run after the timetable is generated to fully ensure there are no clashes
+ *
+ */
 public class ClashDetector {
 
     public static class Clash {
@@ -10,6 +19,13 @@ public class ClashDetector {
         private ScheduledClass scheduledClass1;
         private ScheduledClass scheduledClass2;
 
+        /**
+         * Creates a Clash object. Giving details about what caused it
+         * @param type type of clash
+         * @param description readable description of the clash
+         * @param sc1 the first scheduled class involved in the clash
+         * @param sc2 the second scheduled class involved in the clash
+         */
         public Clash(String type, String description, ScheduledClass sc1, ScheduledClass sc2) {
             this.type = type;
             this.description = description;
@@ -17,9 +33,28 @@ public class ClashDetector {
             this.scheduledClass2 = sc2;
         }
 
+        /**
+         * Getter method for the type of clash
+         * @return clash type
+         */
         public String getType() { return type; }
+
+        /**
+         * Getter method for the description of the conflict
+         * @return clash description
+         */
         public String getDescription() { return description; }
+
+        /**
+         * Getter method for the first scheduled class involved in a clash
+         * @return first scheduled class involved
+         */
         public ScheduledClass getScheduledClass1() { return scheduledClass1; }
+
+        /**
+         * Getter method for the second scheduled class involved in a clash
+         * @return first scheduled class involved
+         */
         public ScheduledClass getScheduledClass2() { return scheduledClass2; }
 
         @Override
@@ -28,6 +63,13 @@ public class ClashDetector {
         }
     }
 
+    /**
+     * Detects clashes in the provided timetable.
+     * Checks for room double bookings, lecturer clashes, group clashes, room capacity
+     * and room type mismsatches.
+     * @param timetable the list of ScheduledClass objects to check for clashes
+     * @return a list of Clash objects representing the conflicts
+     */
     public List<Clash> detectClashes(List<ScheduledClass> timetable) {
         List<Clash> clashes = new ArrayList<>();
 
