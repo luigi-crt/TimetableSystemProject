@@ -9,21 +9,22 @@ public class TimetableGenerator {
     private DataManager dataManager;
     private List<String> days = Arrays.asList("Mon", "Tue", "Wed", "Thu", "Fri");
     private List<String> times = Arrays.asList("09:00", "10:00", "11:00", "12:00", "14:00", "15:00", "16:00");
+    private int semester;
 
-    public TimetableGenerator(DataManager dataManager) {
+    public TimetableGenerator(DataManager dataManager, int semester) {
         this.dataManager = dataManager;
+        this.semester = semester;
     }
-
-
 
     public List<ScheduledClass> generateTimetable() {
         List<ScheduledClass> timetable = new ArrayList<>();
         Set<String> usedSlots = new HashSet<>();
-        List<String> days = Arrays.asList("Mon", "Tue", "Wed", "Thu", "Fri");
-        List<String> times = Arrays.asList("09:00", "10:00", "11:00", "12:00", "14:00", "15:00", "16:00");
 
         for (StudentGroup group : dataManager.getGroups()) {
-            for (Module module : dataManager.getModules()) {
+            List<Module> modules = dataManager.getModulesForProgrammeYearSemester(
+                    group.getProgramme().getCode(), group.getYear(), semester
+            );
+            for (Module module : modules) {
                 List<Lecturer> lecturers = module.getLecturers();
                 int lecturerIndex = 0;
 
@@ -66,7 +67,7 @@ public class TimetableGenerator {
                 for (Room room : dataManager.getRooms()) {
                     // Room type check
                     if (requireLab && !room.isLab()) continue;
-                    if (!requireLab && room.isLab()) continue; //only use classrooms for non-labs
+                    if (!requireLab && room.isLab()) continue; // Only use classrooms for non-labs
 
                     String slotKey = day + "_" + time + "_" + room.getRoomId();
                     if (usedSlots.contains(slotKey)) continue;
@@ -90,7 +91,7 @@ public class TimetableGenerator {
                 }
             }
         }
-        return null;
+        return null; // Could not schedule
     }
 }
 

@@ -1,5 +1,5 @@
-LectuerID, Name
-L001,Mary O'Brien
-L002,John Smith
-L003,Aoife Kelly
-L004,David Lee
+LectuerID, Name, Porgramme
+L001,Mary O'Brien, CS
+L002,John Smith, CS
+L003,Aoife Kelly, ECE
+L004,David Lee, MA
