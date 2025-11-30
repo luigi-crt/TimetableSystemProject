@@ -53,7 +53,7 @@ public class DataManager {
             for (String[] cols : rows.subList(1, rows.size())) {
                 String id = cols[0].trim();
                 String name = cols[1].trim();
-                lecturers.add(new Lecturer(id, name, null));
+                lecturers.add(new Lecturer(id, name));
             }
         } catch (Exception e) {
             System.err.println("Error loading lecturers: " + e.getMessage());
@@ -122,27 +122,34 @@ public class DataManager {
     }
 
     // ---------------- Load Timetable ----------------
+
     private void loadScheduledClasses() {
         try (CSVReader reader = new CSVReader(DATA_PATH + "timetable.csv")) {
             ArrayList<String[]> rows = reader.readToMatrix();
             scheduledClasses.clear();
             for (String[] cols : rows.subList(1, rows.size())) {
+                if (cols.length < 7) continue;
                 Module m = getModule(cols[0].trim());
                 Room r = getRoom(cols[1].trim());
                 String day = cols[2].trim();
                 String time = cols[3].trim();
                 StudentGroup g = getGroup(cols[4].trim());
-                scheduledClasses.add(new ScheduledClass(m, r, day, time, g));
+                String sessionType = cols[5].trim();
+                Lecturer lecturer = getLecturer(cols[6].trim());
+                scheduledClasses.add(new ScheduledClass(m, r, day, time, g, sessionType, lecturer));
             }
         } catch (Exception e) {
             System.err.println("Error loading timetable: " + e.getMessage());
         }
     }
 
+
+
     // ---------------- Save Timetable ----------------
+
     public void saveScheduledClasses() {
         try (CSVWriter writer = new CSVWriter(DATA_PATH + "timetable.csv")) {
-            writer.writeRecord("Module,Room,Day,Time,Group");
+            writer.writeRecord("Module,Room,Day,Time,Group,SessionType,LecturerID");
             List<String[]> rows = new ArrayList<>();
             for (ScheduledClass sc : scheduledClasses) {
                 rows.add(new String[]{
@@ -150,7 +157,9 @@ public class DataManager {
                         sc.getRoom().getRoomId(),
                         sc.getDay(),
                         sc.getTime(),
-                        sc.getGroup().getGroupId()
+                        sc.getGroup().getGroupId(),
+                        sc.getSessionType(),
+                        sc.getLecturer().getId()
                 });
             }
             writer.writeMatrix(rows);

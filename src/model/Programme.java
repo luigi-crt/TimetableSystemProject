@@ -1,7 +1,5 @@
 package model;
 
-import java.util.List;
-
 public class Programme {
     private String code;              // e.g. "CS", "ECE"
     private String name;              // e.g. "Computer Systems"

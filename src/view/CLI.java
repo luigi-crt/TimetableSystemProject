@@ -60,7 +60,9 @@ public class CLI {
                                     sc.getDay() + " " + sc.getTime() +
                                             " | Room: " + sc.getRoom().getRoomId() +
                                             " | Group: " + sc.getGroup().getGroupId() +
-                                            " | Module: " + sc.getModule().getCode()
+                                            " | Module: " + sc.getModule().getCode() +
+                                            " | Type: " + sc.getSessionType() +
+                                            " | Lecturer: " + (sc.getLecturer() != null ? sc.getLecturer().getName() : "N/A")
                             );
                         }
                     }
@@ -70,11 +72,11 @@ public class CLI {
                     System.out.println("Timetable saved to CSV.");
                     break;
                 case "0":
-                    System.out.println("Exiting. Goodbye!");
+                    System.out.println("Exiting.");
                     scanner.close();
                     return;
                 default:
-                    System.out.println("Invalid option. Please try again.");
+                    System.out.println("Invalid option.");
             }
         }
     }
